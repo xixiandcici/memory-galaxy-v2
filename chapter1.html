@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+    <meta charset='UTF-8'>
+    <title>第一卷 · 搬家记 | 记忆星图</title>
+    <style>/* 样式同 core.html，略 */</style>
+</head>
+<body>
+    <h1>📚 第一卷 · 搬家记</h1>
+    <div id="memory-list">加载中...</div>
+    <p><a href="index.html">← 返回星图主页</a></p>
+    <script>
+        fetch('memory-chapter-1.json')
+            .then(r => r.json())
+            .then(data => {
+                const container = document.getElementById('memory-list');
+                container.innerHTML = '<ul>' + 
+                    data.memories.map(m => 
+                        `<li><time>${m.date}</time> | <tag>${m.tag}</tag> | ${m.content}</li>`
+                    ).join('') + 
+                    '</ul>';
+            })
+            .catch(() => {
+                document.getElementById('memory-list').innerHTML = '<p style="color: #ff6b6b;">加载失败，请稍后再试。</p>';
+            });
+    </script>
+</body>
+</html>
