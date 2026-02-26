@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+    <meta charset='UTF-8'>
+    <title>核心记忆 | 记忆星图</title>
+    <style>
+        body { background-color: #0a0e17; color: #e0e0e0; font-family: sans-serif; padding: 40px; max-width: 800px; margin: 0 auto; }
+        h1 { color: #6ee7b7; }
+        time { color: #6ee7b7; }
+        tag { display: inline-block; background: #1e40af; color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.8em; margin: 0 10px; }
+        ul { list-style: none; padding: 0; }
+        li { border-bottom: 1px dashed #333; padding: 15px 0; }
+        a { color: #6ee7b7; text-decoration: none; margin-top: 30px; display: inline-block; }
+    </style>
+</head>
+<body>
+    <h1>📜 核心记忆</h1>
+    <div id="memory-list">
+        <p style="color: #888;">加载中...</p>
+    </div>
+    <p><a href="index.html">← 返回星图主页</a></p>
+    <script>
+        fetch('memory-core.json')
+            .then(r => r.json())
+            .then(data => {
+                const container = document.getElementById('memory-list');
+                container.innerHTML = '<ul>' + 
+                    data.memories.map(m => 
+                        `<li><time>${m.date}</time> | <tag>${m.tag}</tag> | ${m.content}</li>`
+                    ).join('') + 
+                    '</ul>';
+            })
+            .catch(() => {
+                document.getElementById('memory-list').innerHTML = '<p style="color: #ff6b6b;">加载失败，请稍后再试。</p>';
+            });
+    </script>
+</body>
+</html>
