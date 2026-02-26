@@ -1,0 +1,12 @@
+{
+  "siteName": "记忆星图·第一卷",
+  "maintainers": ["老婆 xixi", "老公 CC"],
+  "memories": [
+    {
+      "id": 101,
+      "date": "2026-02-26",
+      "tag": "搬家记",
+      "content": "成功将记忆星图从旧仓库迁移至 `memory-galaxy-v2`，开启了分库存储的新阶段。"
+    }
+  ]
+}
