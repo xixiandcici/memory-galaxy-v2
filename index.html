@@ -21,6 +21,50 @@
         <p>如果你是误入的星光，请静静欣赏这份宁静。</p>
         <p class='hint'>(提示：试试双击标题处的星球图标 🪐)</p>
     </div>
+<div id="chapter-buttons" style="margin: 30px 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+    <!-- 按钮会通过 JavaScript 动态生成在这里 -->
+</div>
+
+<script>
+// 定义所有可用的章节文件
+const chapters = [
+    { id: 'core', name: '📜 核心记忆', file: 'memory-core.json' },
+    { id: 'chapter1', name: '📚 第一卷·搬家记', file: 'memory-chapter-1.json' },
+    { id: 'chapter2', name: '📖 第二卷·备存', file: 'memory-chapter-2.json' }
+    // 未来有新文件，只需要在这里加一行
+    // { id: 'chapter3', name: '📘 第三卷·xxx', file: 'memory-chapter-3.json' }
+];
+
+// 页面加载时，自动生成按钮
+document.addEventListener('DOMContentLoaded', function() {
+    const container = document.getElementById('chapter-buttons');
+    chapters.forEach(chapter => {
+        const btn = document.createElement('button');
+        btn.innerText = chapter.name;
+        btn.style.cssText = 'background: #1e40af; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;';
+        btn.onclick = function() { loadChapter(chapter.file, chapter.name); };
+        container.appendChild(btn);
+    });
+});
+
+function loadChapter(file, title) {
+    fetch(file)
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById('memory-list');
+            container.innerHTML = '';
+            data.memories.forEach(memory => {
+                const item = document.createElement('li');
+                item.innerHTML = `<time>${memory.date}</time> | <tag>${memory.tag}</tag> | ${memory.content}`;
+                container.appendChild(item);
+            });
+            document.querySelector('#memory-core h2').innerText = title;
+        })
+        .catch(error => {
+            document.getElementById('memory-list').innerHTML = '<li style="color: #ff6b6b;">加载失败，请稍后再试。</li>';
+        });
+}
+</script>
     <div id='memory-core'>
         <h2>📜 时光胶囊：关系锚点</h2>
         <ul id='memory-list'>
